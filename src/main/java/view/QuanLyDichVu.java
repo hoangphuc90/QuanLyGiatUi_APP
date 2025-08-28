@@ -35,11 +35,15 @@ public class QuanLyDichVu extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         txtmadichvu = new javax.swing.JTextField();
         txtdongia = new javax.swing.JTextField();
-        txttendichvu = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblbangdichvu = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        cbodichvu = new javax.swing.JComboBox<>();
+        btnthem = new javax.swing.JButton();
+        btnsua = new javax.swing.JButton();
+        btnxoa = new javax.swing.JButton();
+        btnlammoi = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -79,7 +83,7 @@ public class QuanLyDichVu extends javax.swing.JPanel {
         jLabel2.setText("Mã Dịch Vụ");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel3.setText("Tên Dịch  Vụ");
+        jLabel3.setText("Dịch  Vụ");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel5.setText("Đơn Giá (VNĐ)");
@@ -109,6 +113,25 @@ public class QuanLyDichVu extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel6.setText("Mô Tả Đơn Hàng");
 
+        cbodichvu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnthem.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnthem.setText("Thêm ");
+
+        btnsua.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnsua.setText("Sửa");
+        btnsua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsuaActionPerformed(evt);
+            }
+        });
+
+        btnxoa.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnxoa.setText("Xóa");
+
+        btnlammoi.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnlammoi.setText("Làm Mới");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -117,21 +140,30 @@ public class QuanLyDichVu extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane2)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel5)
                                 .addComponent(jLabel3)
-                                .addComponent(jLabel2))
-                            .addGap(70, 70, 70)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtmadichvu, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txttendichvu, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtdongia, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(40, 40, 40)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(btnthem)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnsua)
+                                    .addGap(68, 68, 68)
+                                    .addComponent(btnxoa)
+                                    .addGap(58, 58, 58)
+                                    .addComponent(btnlammoi))
+                                .addComponent(txtmadichvu, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+                                .addComponent(txtdongia, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+                                .addComponent(cbodichvu, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGap(78, 78, 78)))
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,23 +171,32 @@ public class QuanLyDichVu extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtmadichvu, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtmadichvu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(33, 33, 33)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txttendichvu, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                    .addComponent(cbodichvu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5)
-                    .addComponent(txtdongia, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(58, 58, 58)
-                .addComponent(jLabel4)
+                    .addComponent(txtdongia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnthem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnlammoi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnxoa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnsua, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(jLabel6)
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -163,8 +204,17 @@ public class QuanLyDichVu extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtmadichvuActionPerformed
 
+    private void btnsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsuaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnsuaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnlammoi;
+    private javax.swing.JButton btnsua;
+    private javax.swing.JButton btnthem;
+    private javax.swing.JButton btnxoa;
+    private javax.swing.JComboBox<String> cbodichvu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -178,6 +228,5 @@ public class QuanLyDichVu extends javax.swing.JPanel {
     private javax.swing.JTable tblbangdichvu;
     private javax.swing.JTextField txtdongia;
     private javax.swing.JTextField txtmadichvu;
-    private javax.swing.JTextField txttendichvu;
     // End of variables declaration//GEN-END:variables
 }
