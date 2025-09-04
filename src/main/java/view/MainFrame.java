@@ -14,7 +14,7 @@ public class MainFrame extends JFrame {
         setTitle("Quản Lý Tiệm Giặt Là");
         setSize(900, 700);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(3);  //(JFrame.EXIT_ON_CLOSE)
 
         // Tạo menu bar
         JMenuBar menuBar = new JMenuBar();
@@ -33,24 +33,24 @@ public class MainFrame extends JFrame {
 
         // Menu Thống kê
         JMenu menuThongKe = new JMenu("Thống kê");
-        JMenuItem tkDoanhThu = new JMenuItem("Doanh thu");
-        JMenuItem tkDonHang = new JMenuItem("Đơn hàng theo ngày");
+        JMenuItem tkDoanhThu = new JMenuItem("Thống Kê Doanh Thu");
+        JMenuItem tkDonHang = new JMenuItem("Thống Kê Đơn Hàng");
         
         // Menu Thanh toán
         JMenu menuThanhToan = new JMenu("Thanh toán");
-        JMenuItem thanhToanHoaDon = new JMenuItem("Thanh toán hóa đơn");
+        JMenuItem tkthanhToanHoaDon = new JMenuItem("Thanh toán hóa đơn");
         
         // Menu Tra cứu
         JMenu menuTraCuu = new JMenu("Tra cứu");
         JMenuItem traCuuDonHang = new JMenuItem("Tra cứu đơn hàng");
 
-        // Gắn item vào menu
+        // Gắn item vào menu 
         menuKhachHang.add(qlKhachHang);
         menuDonHang.add(qlDonHang);
         menuDichVu.add(qlDichVu);
         menuThongKe.add(tkDoanhThu);
         menuThongKe.add(tkDonHang);
-        menuThanhToan.add(thanhToanHoaDon);
+        menuThanhToan.add(tkthanhToanHoaDon);
         menuTraCuu.add(traCuuDonHang);
 
         // Gắn menu vào menu bar
@@ -79,12 +79,12 @@ public class MainFrame extends JFrame {
         add(mainPanel, BorderLayout.CENTER);
 
         // Xử lý sự kiện menu
-        qlKhachHang.addActionListener(e -> cardLayout.show(mainPanel, "QL_KHACHHANG"));
+        qlKhachHang.addActionListener(e -> cardLayout.show(mainPanel, "QL_KHACHHANGDAO"));
         qlDonHang.addActionListener(e -> cardLayout.show(mainPanel, "QL_DONHANG"));
         qlDichVu.addActionListener(e -> cardLayout.show(mainPanel, "QL_DICHVU"));
         tkDoanhThu.addActionListener(e -> cardLayout.show(mainPanel, "TK_DOANHTHU"));
         tkDonHang.addActionListener(e -> cardLayout.show(mainPanel, "TK_DONHANG"));
-        thanhToanHoaDon.addActionListener(e -> cardLayout.show(mainPanel, "TT_HoaDon"));
+        tkthanhToanHoaDon.addActionListener(e -> cardLayout.show(mainPanel, "TT_HOADON"));
         traCuuDonHang.addActionListener(e -> cardLayout.show(mainPanel, "TC_DONHANG"));
 
 

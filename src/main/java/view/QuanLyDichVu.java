@@ -161,9 +161,9 @@ public class QuanLyDichVu extends javax.swing.JPanel {
                                 .addComponent(txtmadichvu, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
                                 .addComponent(txtdongia, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
                                 .addComponent(cbodichvu, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGap(78, 78, 78)))
+                            .addGap(29, 29, 29)))
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
