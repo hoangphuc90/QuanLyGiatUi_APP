@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
+/* bài này của anh nghĩa */
 public class DBConnection {
     // Thông tin kết nối
     private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=QuanLyGiatUi;encrypt=false;trustServerCertificate=true;";
