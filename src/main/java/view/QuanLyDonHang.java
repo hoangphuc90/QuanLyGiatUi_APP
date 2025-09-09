@@ -64,6 +64,11 @@ public class QuanLyDonHang extends javax.swing.JPanel {
 
         btntaodon.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btntaodon.setText("Tạo Đơn ");
+        btntaodon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btntaodonActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel2.setText("Họ Tên");
@@ -232,6 +237,10 @@ public class QuanLyDonHang extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btntaodonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntaodonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btntaodonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
