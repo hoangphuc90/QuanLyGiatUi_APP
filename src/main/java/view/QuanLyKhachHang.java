@@ -274,7 +274,9 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
     }
 
     DefaultTableModel model = (DefaultTableModel) tblchitietkhachhang.getModel();
-    model.addRow(new Object[]{hoTen, soDienThoai, diaChi});
+
+    // 👉 Thêm dòng mới vào vị trí đầu tiên (index 0)
+    model.insertRow(0, new Object[]{hoTen, soDienThoai, diaChi});
 
     // Reset form
     txthoten.setText("");
