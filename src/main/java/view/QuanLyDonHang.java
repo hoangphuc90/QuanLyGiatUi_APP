@@ -4,17 +4,37 @@
  */
 package view;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ADMIN
  */
 public class QuanLyDonHang extends javax.swing.JPanel {
 
-    /**
-     * Creates new form QuanLyDonGiat
-     */
+    private final DefaultTableModel modelTable;  // Khai báo model bảng
+
     public QuanLyDonHang() {
         initComponents();
+        // Khởi tạo model bảng với tên cột đúng
+        modelTable = new DefaultTableModel(
+            new Object[]{"Họ Tên", "Ngày Nhận", "Ngày Trả", "Dịch Vụ", "Trạng Thái"}, 0);
+        tblthongtindonhang.setModel(modelTable);
+
+        // Khởi tạo combo box với dữ liệu mẫu
+        cbodichvu.removeAllItems();
+        cbodichvu.addItem("Giặt ủi");
+        cbodichvu.addItem("Sửa chữa");
+        cbodichvu.addItem("Giao hàng");
+        
+        cbotrangthaidon.removeAllItems();
+        cbotrangthaidon.addItem("Đang xử lý");
+        cbotrangthaidon.addItem("Đã hoàn thành");
+        cbotrangthaidon.addItem("Đã huỷ");
     }
 
     /**
@@ -37,11 +57,11 @@ public class QuanLyDonHang extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         txtngaytra = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        cbodichvu = new javax.swing.JComboBox<>();
+        cbotrangthaidon = new javax.swing.JComboBox<>();
         txthoten = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtngaynhan = new javax.swing.JTextField();
-        cbotrangthaidonhang = new javax.swing.JComboBox<>();
+        cbodichvu = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -75,12 +95,22 @@ public class QuanLyDonHang extends javax.swing.JPanel {
 
         btnxoadon.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnxoadon.setText("Xoá Đơn ");
+        btnxoadon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnxoadonActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel3.setText("Ngày Nhận");
 
         btncapnhat.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btncapnhat.setText("Cập Nhật");
+        btncapnhat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btncapnhatActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel4.setText("Ngày Trả");
@@ -88,12 +118,12 @@ public class QuanLyDonHang extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel5.setText("Dịch Vụ");
 
-        cbodichvu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbotrangthaidon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel6.setText("Trạng Thái Đơn");
 
-        cbotrangthaidonhang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbodichvu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel7.setText("Thông Tin Đơn Hàng");
@@ -130,11 +160,11 @@ public class QuanLyDonHang extends javax.swing.JPanel {
                                 .addGap(34, 34, 34)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(cbotrangthaidonhang, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cbodichvu, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                                         .addComponent(jLabel6)
                                         .addGap(33, 33, 33)
-                                        .addComponent(cbodichvu, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(cbotrangthaidon, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(txthoten))))))
                 .addGap(269, 269, 269))
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -159,9 +189,9 @@ public class QuanLyDonHang extends javax.swing.JPanel {
                 .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(cbotrangthaidonhang, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbodichvu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(cbodichvu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbotrangthaidon, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnxoadon, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -239,8 +269,96 @@ public class QuanLyDonHang extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btntaodonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntaodonActionPerformed
-        // TODO add your handling code here:
+   // Lấy dữ liệu từ các trường nhập liệu
+String hoTen = txthoten.getText().trim();
+String ngayNhan = txtngaynhan.getText().trim();
+String ngayTra = txtngaytra.getText().trim();
+String dichVu = cbodichvu.getSelectedItem().toString();
+String trangThai = cbotrangthaidon.getSelectedItem().toString();
+
+// Kiểm tra dữ liệu đầu vào (không được để trống)
+if (hoTen.isEmpty() || ngayNhan.isEmpty() || ngayTra.isEmpty()) {
+    JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+    return;
+}
+
+// Kiểm tra định dạng ngày dd/MM/yyyy
+SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+sdf.setLenient(false);
+
+Date parsedNgayNhan = null;
+Date parsedNgayTra = null;
+
+try {
+    parsedNgayNhan = sdf.parse(ngayNhan);
+    parsedNgayTra = sdf.parse(ngayTra);
+
+    // Kiểm tra ngày trả không được trước ngày nhận
+    if (parsedNgayTra.before(parsedNgayNhan)) {
+        JOptionPane.showMessageDialog(this, "Ngày trả phải lớn hơn hoặc bằng ngày nhận!");
+        return;
+    }
+} catch (ParseException e) {
+    JOptionPane.showMessageDialog(this, "Ngày nhận và ngày trả phải đúng định dạng dd/MM/yyyy!");
+    return;
+}
+
+// In ra console để kiểm tra dữ liệu
+System.out.println("Thông tin đơn hàng:");
+System.out.println("Họ tên: " + hoTen);
+System.out.println("Ngày nhận: " + ngayNhan);
+System.out.println("Ngày trả: " + ngayTra);
+System.out.println("Dịch vụ: " + dichVu);
+System.out.println("Trạng thái: " + trangThai);
+
+// TODO: Thêm dữ liệu đơn hàng vào bảng hoặc cơ sở dữ liệu
+// Ví dụ nếu dùng JTable:
+// modelTable.addRow(new Object[] {hoTen, ngayNhan, ngayTra, dichVu, trangThai});
+
+// Hiển thị thông báo tạo đơn thành công
+JOptionPane.showMessageDialog(this, "Đã tạo đơn hàng cho: " + hoTen);
+
+// Xóa form (reset các trường nhập liệu)
+clearForm();
+
     }//GEN-LAST:event_btntaodonActionPerformed
+
+    private void btnxoadonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxoadonActionPerformed
+         int selectedRow = tblthongtindonhang.getSelectedRow();
+    if (selectedRow >= 0) {
+        modelTable.removeRow(selectedRow);
+        JOptionPane.showMessageDialog(this, "Đã xoá đơn hàng.");
+    } else {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn đơn hàng để xoá.");
+    }
+    }//GEN-LAST:event_btnxoadonActionPerformed
+
+    private void btncapnhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncapnhatActionPerformed
+        int selectedRow = tblthongtindonhang.getSelectedRow();
+    if (selectedRow >= 0) {
+        String hoTen = txthoten.getText();
+        String ngayNhan = txtngaynhan.getText();
+        String ngayTra = txtngaytra.getText();
+        String dichVu = cbodichvu.getSelectedItem().toString();
+        String trangThai = cbotrangthaidon.getSelectedItem().toString();
+
+        if (hoTen.isEmpty() || ngayNhan.isEmpty() || ngayTra.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+            return;
+        }
+
+        modelTable.setValueAt(hoTen, selectedRow, 0);
+        modelTable.setValueAt(ngayNhan, selectedRow, 1);
+        modelTable.setValueAt(ngayTra, selectedRow, 2);
+        modelTable.setValueAt(dichVu, selectedRow, 3);
+        modelTable.setValueAt(trangThai, selectedRow, 4);
+
+        JOptionPane.showMessageDialog(this, "Cập nhật đơn hàng thành công.");
+        clearForm();
+    } else {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn đơn hàng để cập nhật.");
+    }
+    }//GEN-LAST:event_btncapnhatActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -248,7 +366,7 @@ public class QuanLyDonHang extends javax.swing.JPanel {
     private javax.swing.JButton btntaodon;
     private javax.swing.JButton btnxoadon;
     private javax.swing.JComboBox<String> cbodichvu;
-    private javax.swing.JComboBox<String> cbotrangthaidonhang;
+    private javax.swing.JComboBox<String> cbotrangthaidon;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -265,4 +383,12 @@ public class QuanLyDonHang extends javax.swing.JPanel {
     private javax.swing.JTextField txtngaynhan;
     private javax.swing.JTextField txtngaytra;
     // End of variables declaration//GEN-END:variables
+
+    private void clearForm() {
+    txthoten.setText("");
+    txtngaynhan.setText("");
+    txtngaytra.setText("");
+    cbodichvu.setSelectedIndex(0);
+    cbotrangthaidon.setSelectedIndex(0);
+    }
 }

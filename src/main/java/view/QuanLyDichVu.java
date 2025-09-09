@@ -4,18 +4,34 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ADMIN
  */
 public class QuanLyDichVu extends javax.swing.JPanel {
 
-    /**
-     * Creates new form QuanLyDichVu
-     */
+    private DefaultTableModel modelDichVu;
     public QuanLyDichVu() {
         initComponents();
+        modelDichVu = new DefaultTableModel(
+            new Object[]{"Mã Dịch Vụ", "Tên Dịch Vụ", "Đơn Giá (VNĐ)"}, 0
+        );
+        tblbangdichvu.setModel(modelDichVu);
+        loadComboBoxDichVu();
     }
+    private void loadComboBoxDichVu() {
+    cbodichvu.removeAllItems(); // Xóa các item cũ nếu có
+
+    cbodichvu.addItem("Giặt ủi thường");
+    cbodichvu.addItem("Giặt hấp");
+    cbodichvu.addItem("Ủi đồ");
+    cbodichvu.addItem("Gấp đồ");
+    cbodichvu.addItem("Giặt nhanh");
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -117,6 +133,11 @@ public class QuanLyDichVu extends javax.swing.JPanel {
 
         btnthem.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnthem.setText("Thêm ");
+        btnthem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnthemActionPerformed(evt);
+            }
+        });
 
         btnsua.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnsua.setText("Sửa");
@@ -128,9 +149,19 @@ public class QuanLyDichVu extends javax.swing.JPanel {
 
         btnxoa.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnxoa.setText("Xóa");
+        btnxoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnxoaActionPerformed(evt);
+            }
+        });
 
         btnlammoi.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnlammoi.setText("Làm Mới");
+        btnlammoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnlammoiActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -205,8 +236,97 @@ public class QuanLyDichVu extends javax.swing.JPanel {
     }//GEN-LAST:event_txtmadichvuActionPerformed
 
     private void btnsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsuaActionPerformed
-        // TODO add your handling code here:
+          DefaultTableModel modelDichVu = (DefaultTableModel) tblbangdichvu.getModel();
+
+    int selectedRow = tblbangdichvu.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn dịch vụ cần sửa!");
+        return;
+    }
+
+    String maDV = txtmadichvu.getText().trim();
+    String tenDV = cbodichvu.getSelectedItem().toString();
+    String donGiaStr = txtdongia.getText().trim();
+
+    if (maDV.isEmpty() || tenDV.isEmpty() || donGiaStr.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin dịch vụ!");
+        return;
+    }
+
+    double donGia;
+    try {
+        donGia = Double.parseDouble(donGiaStr);
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Đơn giá phải là số hợp lệ!");
+        return;
+    }
+
+    modelDichVu.setValueAt(maDV, selectedRow, 0);
+    modelDichVu.setValueAt(tenDV, selectedRow, 1);
+    modelDichVu.setValueAt(donGia, selectedRow, 2);
+
+    JOptionPane.showMessageDialog(this, "Đã cập nhật dịch vụ!");
+    clearForm();
     }//GEN-LAST:event_btnsuaActionPerformed
+
+    private void btnthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthemActionPerformed
+        System.out.println("Nút Thêm được click");
+
+    String maDV = txtmadichvu.getText().trim();
+    String tenDV = cbodichvu.getSelectedItem().toString(); 
+    String donGiaStr = txtdongia.getText().trim();
+
+    if(maDV.isEmpty() || tenDV.isEmpty() || donGiaStr.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin dịch vụ!");
+        return;
+    }
+
+    double donGia;
+    try {
+        donGia = Double.parseDouble(donGiaStr);
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Đơn giá phải là số hợp lệ!");
+        return;
+    }
+
+    // Kiểm tra mã dịch vụ đã tồn tại chưa
+    for (int i = 0; i < modelDichVu.getRowCount(); i++) {
+    Object value = modelDichVu.getValueAt(i, 0);
+    if (value != null && value.toString().equals(maDV)) {
+        JOptionPane.showMessageDialog(this, "Mã dịch vụ đã tồn tại!");
+        return;
+    }
+}
+
+
+    modelDichVu.addRow(new Object[]{maDV, tenDV, donGia});
+    JOptionPane.showMessageDialog(this, "Đã thêm dịch vụ!");
+    clearForm();
+    }//GEN-LAST:event_btnthemActionPerformed
+
+    private void btnxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxoaActionPerformed
+       DefaultTableModel modelDichVu = (DefaultTableModel) tblbangdichvu.getModel();
+
+    int selectedRow = tblbangdichvu.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn dịch vụ cần xóa!");
+        return;
+    }
+
+    int confirm = JOptionPane.showConfirmDialog(this,
+        "Bạn có chắc muốn xóa dịch vụ này không?",
+        "Xác nhận xóa",
+        JOptionPane.YES_NO_OPTION);
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        modelDichVu.removeRow(selectedRow);
+        JOptionPane.showMessageDialog(this, "Đã xóa dịch vụ!");
+        clearForm();
+    }//GEN-LAST:event_btnxoaActionPerformed
+    }
+    private void btnlammoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlammoiActionPerformed
+       clearForm();
+    }//GEN-LAST:event_btnlammoiActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -229,4 +349,11 @@ public class QuanLyDichVu extends javax.swing.JPanel {
     private javax.swing.JTextField txtdongia;
     private javax.swing.JTextField txtmadichvu;
     // End of variables declaration//GEN-END:variables
+
+    private void clearForm() {
+        txtmadichvu.setText("");
+    cbodichvu.setSelectedIndex(0);  // chọn giá trị đầu tiên của combo box
+    txtdongia.setText("");
+    tblbangdichvu.clearSelection();
+    }
 }
