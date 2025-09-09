@@ -6,7 +6,7 @@ package model;
 
 /**
  *
- * @Minhnghia2006
+ * @Minhnghia20
  */
 public class KhachHang {
     
