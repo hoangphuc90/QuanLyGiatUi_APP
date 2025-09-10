@@ -4,18 +4,61 @@
  */
 package view;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import util.DBConnection;
+
 /**
  *
  * @author ADMIN
  */
 public class ThongKeDonHang extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ThongKeDonHang
-     */
     public ThongKeDonHang() {
         initComponents();
+        loadThongKeDonHang();      
     }
+     public void loadThongKeDonHang() {
+        DefaultTableModel model = (DefaultTableModel) tblthongkedonhang.getModel();
+        model.setRowCount(0); // Xóa dữ liệu cũ
+
+        try (Connection conn = DBConnection.getConnection()) {
+            String sql = "SELECT d.MaDon, d.NgayNhan, d.NgayTra, k.TenKhachHang, dv.TenDichVu, d.SoLuong, d.DonGia, (d.SoLuong * d.DonGia) AS TongTien " +
+                         "FROM DonHang d " +
+                         "JOIN KhachHang k ON d.MaKH = k.MaKH " +
+                         "JOIN DichVu dv ON d.MaDV = dv.MaDV";
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            int stt = 1;
+
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    stt++,
+                    rs.getString("MaDon"),
+                    rs.getDate("NgayNhan"),
+                    rs.getDate("NgayTra"),
+                    rs.getString("TenKhachHang"),
+                    rs.getString("TenDichVu"),
+                    rs.getInt("SoLuong"),
+                    rs.getDouble("DonGia"),
+                    rs.getDouble("TongTien")
+                });
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Lỗi tải thống kê đơn hàng: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

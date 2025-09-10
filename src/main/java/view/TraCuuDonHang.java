@@ -3,18 +3,77 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package view;
-
-/**
- *
- * @author ADMIN
- */
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import util.DBConnection;
 public class TraCuuDonHang extends javax.swing.JPanel {
 
     /**
      * Creates new form TraCuuDonHang
      */
     public TraCuuDonHang() {
-        initComponents();
+         initComponents();
+        loadData(null, null, null, null); // load ban đầu toàn bộ dữ liệu
+        cbotrangthaidonhang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Đang xử lý", "Đã giao", "Đã hủy" 
+        }));
+                
+    }
+     private void loadData(String maDon, String hoTen, String soDienThoai, String trangThai) {
+        DefaultTableModel model = (DefaultTableModel) tblthongtintracuudonhang.getModel();
+        model.setRowCount(0); // xóa dữ liệu cũ
+
+        String sql = "SELECT k.TenKhachHang, d.MaDon, k.SoDienThoai, d.TrangThai " +
+                     "FROM DonHang d " +
+                     "JOIN KhachHang k ON d.MaKH = k.MaKH " +
+                     "WHERE 1=1 ";
+
+        if (maDon != null && !maDon.trim().isEmpty()) {
+            sql += "AND d.MaDon LIKE ? ";
+        }
+        if (hoTen != null && !hoTen.trim().isEmpty()) {
+            sql += "AND k.TenKhachHang LIKE ? ";
+        }
+        if (soDienThoai != null && !soDienThoai.trim().isEmpty()) {
+            sql += "AND k.SoDienThoai LIKE ? ";
+        }
+        if (trangThai != null && !trangThai.equals("Tất cả")) {
+            sql += "AND d.TrangThai = ? ";
+        }
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            int index = 1;
+            if (maDon != null && !maDon.trim().isEmpty()) {
+                stmt.setString(index++, "%" + maDon + "%");
+            }
+            if (hoTen != null && !hoTen.trim().isEmpty()) {
+                stmt.setString(index++, "%" + hoTen + "%");
+            }
+            if (soDienThoai != null && !soDienThoai.trim().isEmpty()) {
+                stmt.setString(index++, "%" + soDienThoai + "%");
+            }
+            if (trangThai != null && !trangThai.equals("Tất cả")) {
+                stmt.setString(index++, trangThai);
+            }
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getString("TenKhachHang"),
+                    rs.getString("MaDon"),
+                    rs.getString("SoDienThoai"),
+                    rs.getString("TrangThai")
+                });
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Lỗi truy vấn: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -86,12 +145,12 @@ public class TraCuuDonHang extends javax.swing.JPanel {
 
         tblthongtintracuudonhang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Tên Khách Hàng", "Mã Đơn", "Số Điện Thoại"
+                "Tên Khách Hàng", "Mã Đơn", "Số Điện Thoại", "Trạng Thái"
             }
         ));
         jScrollPane1.setViewportView(tblthongtintracuudonhang);
@@ -164,7 +223,11 @@ public class TraCuuDonHang extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btntimkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntimkiemActionPerformed
-        // TODO add your handling code here:
+        String maDon = txtmadonhang.getText();
+        String hoTen = txthoten.getText();
+        String soDienThoai = txtsdt.getText();
+        String trangThai = (String) cbotrangthaidonhang.getSelectedItem();
+        loadData(maDon, hoTen, soDienThoai, trangThai); 
     }//GEN-LAST:event_btntimkiemActionPerformed
 
 
